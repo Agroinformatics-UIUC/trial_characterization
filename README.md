@@ -19,11 +19,11 @@ The file input.csv has a row for each trial to be simulated. It requires the fol
 | **Variable** | **Description** |
 | --- | --- |
 | Site | User site identifier |
-| Planting | Planting date (month / day / year) |
+| Planting | Planting date |
 | Latitude | Latitude of the trial point |
 | Longitude | Longitude of the trial point |
-| Crop | Soybean or maize |
-| Genetics | For soybean: maturity group (0 to 6, by 1) For corn: RM (80 to 130, by 5) |
+| Crop | soybean or maize |
+| Genetics | For soybean: maturity group (0 to 6, by 1)For corn: RM (80 to 130, by 5) |
 
 # Output variables
 
