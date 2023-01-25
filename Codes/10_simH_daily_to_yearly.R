@@ -8,6 +8,8 @@
 
 library(stringr)
 library(data.table)
+library(ggplot2)
+library(zoo)
 # install.packages('XML','~/Rlibs')"
 
 #Get the computer where this is running
@@ -108,7 +110,7 @@ make_yearly_summary <- function(daily_dt){
                                         period_name = c('fallow_initial', 'veg_early', 'veg_late', 
                                                         'flowering', 'grainf_early', 'grainf_late', 'fallow_end'))
   
-  data.table::fwrite(periods_code_dt, './trial_characterization_box/Data/output/periods_code.csv')
+  data.table::fwrite(periods_code_dt, './trial_characterization_box/output/periods_code.csv')
   
   
   daily_dt[id_trial == 2,.(stage = mean(stage), 
@@ -140,7 +142,7 @@ make_yearly_summary <- function(daily_dt){
   
   #--------------------------
   # Soil information
-  horizons_dt <- readRDS("./trial_characterization_box/Data/rds_files/horizons_dt.rds") %>% 
+  horizons_dt <- readRDS("./trial_characterization_box/rds_files/horizons_dt.rds") %>% 
     .[bottom <= 20]
   
   horizons_dt2 <- horizons_dt[,.( sand = round(mean(sand),2), 
@@ -165,16 +167,16 @@ make_yearly_summary <- function(daily_dt){
 
 #----------------------------------------------------------------------------
 
-daily_dt <- readRDS('./trial_characterization_box/Data/rds_files/apsim_output_daily.rds')
+daily_dt <- readRDS('./trial_characterization_box/rds_files/apsim_output_daily.rds')
 
 c(1:127)[!1:127 %in% (daily_dt$id_trial %>% unique())]
 
-caracterization_dt <- make_yearly_summary(daily_dt)
+characterization_dt <- make_yearly_summary(daily_dt)
 
-saveRDS(caracterization_dt, './trial_characterization_box/Data/rds_files/caracterization_dt.rds')
-data.table::fwrite(caracterization_dt, './trial_characterization_box/Data/output/caracterization.csv')
+saveRDS(characterization_dt, './trial_characterization_box/rds_files/characterization_dt.rds')
+data.table::fwrite(characterization_dt, './trial_characterization_box/output/characterization.csv')
 
 
-ggplot(caracterization_dt)+
-  geom_point(aes(x = swdef_expan_3, y = Yield)) +
-  facet_free(.~Crop)
+#ggplot(characterization_dt)+
+#  geom_point(aes(x = swdef_expan_3, y = Yield)) +
+#  facet_free(.~Crop)

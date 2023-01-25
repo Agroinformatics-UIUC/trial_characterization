@@ -21,7 +21,7 @@ cl <- parallel::makeCluster(no_cores,type='SOCK')
 
 make_met_files <- function(id_loc_n, weather_dt, directory = directory){
   # id_loc_n = 1
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/APSIM_package.R')) #Load the APSIM package (is deprecated)
+  source(paste0(codes_folder, '/Codes/APSIM_package.R')) #Load the APSIM package (is deprecated)
   packages_need <- c('dplyr', 'data.table', 'sf')
   lapply(packages_need, require, character.only = TRUE)
   

@@ -1,4 +1,4 @@
-source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/R/latlong2county.R'))
+source(paste0(codes_folder, '/APssurgo_master/R/latlong2county.R'))
 "C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/latlong2county.R"
 
 library(maps)

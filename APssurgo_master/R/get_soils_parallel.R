@@ -19,8 +19,8 @@ get_soils <- function(loc_n){
   one_loc_sf <- locs_sf[loc_n,]
   
   one_loc_box <- st_bbox(one_loc_sf)
-  one_loc_box[[3]] <- one_loc_box[[1]]+ 0.00001
-  one_loc_box[[4]] <- one_loc_box[[2]]+ 0.00001
+  one_loc_box[[3]] <- one_loc_box[[1]]+ 0.00002
+  one_loc_box[[4]] <- one_loc_box[[2]]+ 0.00002
   
   possibleError <- tryCatch({
     ssurgo_pol <- mapunit_geom_by_ll_bbox(one_loc_box)
@@ -79,6 +79,6 @@ results_list_clean <- results_list[vapply(results_list, Negate(is.null), NA)]
 soils_sf <- do.call(what = base::rbind, args = results_list_clean)
 rownames(soils_sf) <- 1:nrow(soils_sf)
 
-saveRDS(soils_sf, './trial_characterization_box/Data/rds_files/soils_sf.rds') 
+saveRDS(soils_sf, './trial_characterization_box/rds_files/soils_sf.rds') 
 # stopCluster(cl)
   

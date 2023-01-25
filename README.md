@@ -19,7 +19,7 @@ The file input.csv has a row for each trial to be simulated. It requires the fol
 | **Variable** | **Description** |
 | --- | --- |
 | Site | User site identifier |
-| Planting | Planting date (month / day / year)|
+| Planting | Planting date |
 | Latitude | Latitude of the trial point |
 | Longitude | Longitude of the trial point |
 | Crop | soybean or maize |

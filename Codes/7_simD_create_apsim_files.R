@@ -27,7 +27,8 @@ apsim_create_files <- function(i){
 
   trials_tmp <- trials_dt[i]
   #--- load the base apsim file ---# 
-  base_doc <- xml2::read_xml("./trial_characterization_box/Data/apsim_files/trial_crct.apsim")
+  #base_doc <- xml2::read_xml("./trial_characterization_box/apsim_files/trial_crct.apsim")
+  base_doc <- xml2::read_xml(paste0(codes_folder,"/trial_crct.apsim"))
   
   #Clean the plots
   # for(x in xml2::xml_find_all(base_doc, '//Graph')[2:10]){xml2::xml_remove(x)}
@@ -35,7 +36,9 @@ apsim_create_files <- function(i){
   #--- edit the met directory ---#
   folder_name <- paste(directory, '/met_files',sep = '')
   
-  met_dir <- paste(directory, '/met_files/loc_',trials_tmp$id_loc,'.met', sep = '')
+  #met_dir <- paste(directory, '/met_files/loc_',trials_tmp$id_loc,'.met', sep = '')
+  #met_dir <- gsub("/", "\\", met_dir, fixed=TRUE)
+  met_dir <- paste(getwd(),substring(directory,2,nchar(directory)), '/met_files/loc_',trials_tmp$id_loc,'.met', sep = '')
   met_dir <- gsub("/", "\\", met_dir, fixed=TRUE)
   
   node <-  xml_find_all(base_doc,'//metfile/filename')

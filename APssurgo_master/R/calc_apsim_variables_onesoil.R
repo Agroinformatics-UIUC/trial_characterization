@@ -1,4 +1,4 @@
-source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/R/SaxtonRawls.R'))
+source(paste0(codes_folder, '/APssurgo_master/R/SaxtonRawls.R'))
 "C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/SaxtonRawls.R"
 # horizons_dt <- horizons_dt
 
@@ -13,6 +13,8 @@ calc_apsim_variables <- function(horizons_dt, region_n){
   for(mukey_n in mukey_seq){
     # mukey_n <- mukey_seq[1]
     horizon <- horizons_dt[mukey == mukey_n,]
+    
+    horizon <- arrange(horizon, id_loc) #added in case there were multiple locations in a mukey for correct assignment of vectors
   
     # Calculate new variables -------------------------------------------------------------------
   
@@ -112,10 +114,13 @@ calc_apsim_variables <- function(horizons_dt, region_n){
     #                                              ifelse(horizon$center<=300,0.01,0))))) #(0-1)
   
 
-    horizon$FBiom = c(0.08, 0.06, 0.055, 0.035, 0.015, 0.01,0.005, 0.005, 0.001,0.001)
-    horizon$FInert = c(0.42, 0.45, 0.55, 0.6, 0.65, 0.7, 0.75,0.80, 0.92, 0.98)
+    #horizon$FBiom = c(0.08, 0.06, 0.055, 0.035, 0.015, 0.01,0.005, 0.005, 0.001, 0.001)
+    #horizon$FInert = c(0.42, 0.45, 0.55, 0.6, 0.65, 0.7, 0.75,0.80, 0.92, 0.98)
       
-  
+    horizon$FBiom = rep(c(0.08, 0.06, 0.055, 0.035, 0.015, 0.01,0.005, 0.005, 0.001, 0.001), length.out = nrow(horizon))
+    horizon$FInert = rep(c(0.42, 0.45, 0.55, 0.6, 0.65, 0.7, 0.75,0.80, 0.92, 0.98), length.out = nrow(horizon))
+    
+    
     
     horizon$RootCN <- 45
   
@@ -133,6 +138,8 @@ calc_apsim_variables <- function(horizons_dt, region_n){
     horizon$nh4kgha <- 20
     
     soils_list[[which(mukey_seq == mukey_n)]] <- horizon
+    
+    print(mukey_n) #DEBUG
   
   }#end of mukey_n loop
   

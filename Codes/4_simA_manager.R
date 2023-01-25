@@ -1,4 +1,4 @@
-rm(list=ls())
+rm(list=setdiff(ls(), c("codes_folder", "result_folder")))
 
 library(stringr)
 library(data.table)
@@ -9,18 +9,15 @@ cpsc <-ifelse(Sys.info()["nodename"] == "CPSC-P10E53323", TRUE, FALSE)
 cluster <- str_detect(string = Sys.info()["nodename"], pattern = 'campuscluster')
 print(Sys.info()["nodename"])
 
-#Set the wd
-if(server){
-  setwd('~')
-  codes_folder <- getwd()
-}else if(cpsc){
-  setwd('C:/Users/germanm2/Box Sync/My_Documents')
-  codes_folder <-'C:/Users/germanm2/Documents'
-}
+if(!exists("result_folder")) {
+  result_folder <- "~/example_characterization"
+  setwd(result_folder) 
+} 
+if(!exists("codes_folder")) {codes_folder <-'~/trial_characterization'} 
 
 # ---------------------------------------------------------------------------------------------
 # Load needed files
-trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds") %>% 
+trials_dt <- readRDS("./trial_characterization_box/rds_files/trials_sf.rds") %>% 
   data.table() %>% .[,-'geometry']
 
 
@@ -28,27 +25,27 @@ trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds"
 start1 <- Sys.time()
 "C:/Users/germanm2/Documents/trial_characterization_git/Codes/5_simB_setup.R"
 "./trial_characterization_git/Codes/5_simB_setup.R"
-source(paste0(codes_folder, '/trial_characterization_git/Codes/5_simB_setup.R'))
+source(paste0(codes_folder, '/Codes/5_simB_setup.R'))
 instructions_rows <- nrow(trials_dt)
 
 #RUN ALL APSIM FILES
 start2 <- Sys.time()
 "C:/Users/germanm2/Documents/trial_characterization_git/Codes/8_simF_run_files.R"
 "./trial_characterization_git/Codes/8_simF_run_files.R"
-source(paste0(codes_folder, '/trial_characterization_git/Codes/8_simF_run_files.R'))
+source(paste0(codes_folder, '/Codes/8_simF_run_files.R'))
 
 #MERGE ALL THE OUTPUT
 start3 <- Sys.time()
 "C:/Users/germanm2/Documents/trial_characterization_git/Codes/9_simG_merge_results.R"
 "./trial_characterization_git/Codes/9_simG_merge_results.R"
-source(paste0(codes_folder, '/trial_characterization_git/Codes/9_simG_merge_results.R'))
+source(paste0(codes_folder, '/Codes/9_simG_merge_results.R'))
 
 start4 <- Sys.time()
 
 #MAKE YEARLY SUMMARY
 "C:/Users/germanm2/Documents/trial_characterization_git/Codes/10_simH_daily_to_yearly.R"
 './trial_characterization_git/Codes/10_simH_daily_to_yearly.R'
-source(paste0(codes_folder, '/trial_characterization_git/Codes/10_simH_daily_to_yearly.R'))
+source(paste0(codes_folder, '/Codes/10_simH_daily_to_yearly.R'))
   
 unlink(directory, recursive = TRUE)
   
@@ -63,7 +60,7 @@ time_track_tmp <- data.table(trials = nrow(trials_dt),
                              all = as.numeric(difftime(start5, start1, units = "mins")))
 print(time_track_tmp)
 
-saveRDS(time_track_tmp, './trial_characterization_box/Data/rds_files/time_track.rds')
+saveRDS(time_track_tmp, './trial_characterization_box/rds_files/time_track.rds')
   
   
   
@@ -92,13 +89,13 @@ saveRDS(time_track_tmp, './trial_characterization_box/Data/rds_files/time_track.
 
 # all_locs_weather_dt <- readRDS('./trial_characterization_box/Data/met_files/all_locs_weather_dt.rds')
 
-source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/R/calc_apsim_variables_onesoil.R'))
+source(paste0(codes_folder, '/APssurgo_master/R/calc_apsim_variables_onesoil.R'))
 
 
 "C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/calc_apsim_variables_onesoil.R"
 
 
-source('./trial_characterization_box/Data/APssurgo_master/R/make_apsoils_toolbox.R')
+source('./APssurgo_master/R/make_apsoils_toolbox.R')
 source('./G2F/Codes/make_met_files.R')
 source('./G2F/Codes/apsim_merge_data.R')
 source('./G2F/Codes/apsim_create_files_May25.R')
@@ -196,3 +193,4 @@ ggplot(data=results_yearly_dt2, aes(x = yld_obs, y = yld_sim)) +
   ggtitle('Sequential vs Continuous') +
   theme_bw()+
   geom_text(aes(label = trial), size = 3)
+
