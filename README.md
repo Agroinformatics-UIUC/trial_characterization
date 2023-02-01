@@ -8,13 +8,9 @@ This repository takes a csv with information from trials (crop, planting date, l
 
 The characterization variables can be used to characterize the environment of the trials, find clusters of trials with similar conditions, use the variables as regressors to explain the trial results, extrapolate results to areas where trials were not implemented.
 
-# About the code
+#Input Variables
 
-The codes are enumerated in the order they need to be executed. Only the first four codes need to be run, and these four codes will call the other ones.
-
-# Input variables
-
-The file input.csv has a row for each trial to be simulated. It requires the following information:
+Create an input .csv file formatted as following, where each row is one trial to be simulated. 
 
 | **Variable** | **Description** |
 | --- | --- |
@@ -24,6 +20,15 @@ The file input.csv has a row for each trial to be simulated. It requires the fol
 | Longitude | Longitude of the trial point |
 | Crop | soybean or maize |
 | Genetics | For soybean: maturity group (0 to 6, by 1) For corn: RM (80 to 130, by 5) |
+
+# How to Run
+
+Create a results folder and place the input.csv inside. 
+Open 1_input_to_sf.R, which is found in trial_characterization/Codes/1_input_to_sf.R.
+Edit 1_input_to_sf.R line 3 to the full path to the folder where you want your characterization results. 
+Edit 1_input_to_sf.R line 6 to full path to where you have the trial_characterization folder. 
+Run files 1_input_to_sf.R, 2_weather_downloader.R, 3_soils_manager.R, and 4_simA_manager.R, which are found in trial_characterization/Codes. 
+Your outputs will be in trial_characterization_box/output in the results folder. 
 
 # Output variables
 
