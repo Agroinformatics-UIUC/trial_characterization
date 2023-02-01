@@ -8,7 +8,7 @@ This repository takes a csv with information from trials (crop, planting date, l
 
 The characterization variables can be used to characterize the environment of the trials, find clusters of trials with similar conditions, use the variables as regressors to explain the trial results, extrapolate results to areas where trials were not implemented.
 
-#Input Variables
+# Input Variables
 
 Create an input .csv file formatted as following, where each row is one trial to be simulated. 
 
