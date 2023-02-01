@@ -23,17 +23,17 @@ Create an input .csv file formatted as following, where each row is one trial to
 
 # How to Run
 
-Create a results folder and place the input.csv inside. 
+Create a results folder and place the input .csv inside. 
 
 Open 1_input_to_sf.R, which is found in trial_characterization/Codes/1_input_to_sf.R.
 
-Edit 1_input_to_sf.R line 3 to the full path to the folder where you want your characterization results. 
+Edit 1_input_to_sf.R line 3 to the full path to the results folder which has the input .csv. 
 
 Edit 1_input_to_sf.R line 6 to full path to where you have the trial_characterization folder. 
 
 Run files 1_input_to_sf.R, 2_weather_downloader.R, 3_soils_manager.R, and 4_simA_manager.R, which are found in trial_characterization/Codes. 
 
-Your outputs will be in trial_characterization_box/output in the results folder. 
+Your outputs will be in the results folder in trial_characterization_box/output. 
 
 # Output variables
 
