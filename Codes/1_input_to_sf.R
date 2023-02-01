@@ -13,10 +13,13 @@ source(paste0(codes_folder,'/Codes/Codes_useful/R.libraries.R'))
 #trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
 if(!file.exists(result_folder)){dir.create(result_folder, recursive = TRUE)}
 if(!file.exists('./trial_characterization_box/')){dir.create('./trial_characterization_box/', recursive = TRUE)}
-if(length(list.files('./trial_characterization_box/'))==0)
+if(length(list.files('./trial_characterization_box/')==0))
   {print(paste0("Place the characterization input .csv in ",result_folder,"/trial_characterization_box/"))}
-charact_dt <- list.files('./trial_characterization_box/') %>% .[grep(".csv",.)]
-trials_dt <- data.table::fread(paste0('./trial_characterization_box/',charact_dt)) 
+charact_dt <- list.files(result_folder) %>% .[grep(".csv",.)]
+if(any(grep(charact_dt,"input.csv")==TRUE)){
+  charact_dt<-"input.csv"
+} else {charact_dt<-charact_dt[1]}
+trials_dt <- data.table::fread(paste0(result_folder,"/",charact_dt)) 
 
 trials_dt[,Crop := tolower(Crop)]
 # (bushels x 60 lbs/bu x 0.4536 kg/lb) then divide by 0.4047 ha/ac.
