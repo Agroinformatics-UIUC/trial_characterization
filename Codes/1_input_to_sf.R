@@ -1,18 +1,22 @@
 rm(list=ls())
 
-result_folder <- "~/example_characterization" #set to the folder that will hold the characterization results 
-#(arbitrarily make a new one, ex: soy_trials of what will become soy_trials/trial_characterization_box)
+result_folder <- "~/example_characterization" #set to full path to the folder that will hold the characterization results 
+#(you can arbitrarily make a new one, ex: soy_trials of what will become soy_trials/trial_characterization_box)
 setwd(result_folder) 
-codes_folder <-'~/trial_characterization' #set to the folder with the codes 
-#(default is trial_characterization of trial_characterization/Codes)
+codes_folder <-'~/trial_characterization' #set to full path to the folder with the codes 
+#(unless you change the name, that's trial_characterization of trial_characterization/Codes)
 
 source(paste0(codes_folder,'/Codes/Codes_useful/R.libraries.R'))
 # ---------------------------------------------------------------------------------------------
 # Load the input file, with coordinates and planting dates
 
 #trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
+if(!file.exists(result_folder)){dir.create(result_folder, recursive = TRUE)}
 if(!file.exists('./trial_characterization_box/')){dir.create('./trial_characterization_box/', recursive = TRUE)}
-trials_dt <- data.table::fread('./trial_characterization_box/charact_dt.csv') 
+if(length(list.files('./trial_characterization_box/'))==0)
+  {print(paste0("Place the characterization input .csv in ",result_folder,"/trial_characterization_box/"))}
+charact_dt <- list.files('./trial_characterization_box/') %>% .[grep(".csv",.)]
+trials_dt <- data.table::fread(paste0('./trial_characterization_box/',charact_dt)) 
 
 trials_dt[,Crop := tolower(Crop)]
 # (bushels x 60 lbs/bu x 0.4536 kg/lb) then divide by 0.4047 ha/ac.
@@ -57,12 +61,12 @@ trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(Planting, forma
                                          month = tolower(format(planting_date,"%b")),
                                          year = format(planting_date,"%Y")) 
 #remove later 
-if (exists("trials_sf"$Year))
-trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(paste0(Planting,"/",Year), format = "%j/%Y"),
-                                         day = format(planting_date,"%d"),
-                                         month = tolower(format(planting_date,"%b")),
-                                         year = format(planting_date,"%Y")) 
-
+#if (exists("trials_sf"$Year)){
+#trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(paste0(Planting,"/",Year), format = "%j/%Y"),
+#                                         day = format(planting_date,"%d"),
+#                                         month = tolower(format(planting_date,"%b")),
+#                                         year = format(planting_date,"%Y")) 
+#}
 
 if(!file.exists('./trial_characterization_box/rds_files')){dir.create('./trial_characterization_box/rds_files', recursive = TRUE)}
 
