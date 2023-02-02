@@ -23,7 +23,7 @@ Create an input .csv file formatted as following, where each row is one trial to
 
 # How to Run
 
-Create a results folder and place the input .csv inside. 
+Create a results folder and place the input .csv inside.
 
 Open 1_input_to_sf.R, which is found in trial_characterization/Codes/1_input_to_sf.R.
 
@@ -74,8 +74,39 @@ The variables are divided into periods (example: rain\_7 means rain during perio
 | 5 | grainf\_late |
 | 6 | fallow\_end |
 
+# Structure of the Tool 
+
+The climate characterization tool consists of the following files, which are found in the trial_characterization/Codes folder. An indented arrow below a file indicates the files that that file calls on. If all goes smoothly, the user should only need to run the top-level files: 1, 2, 3, and file 4 up to line 65.  
+
+|1_input_to_sf.R (Sets working directory in the format result_folder <- "~/example_characterization" ; setwd(wd), sets code directory in the format codes_folder <-'~/trial_characterization', creates trials_sf.rds from input file which should be in the results folder. Make sure that the input .csv is formatted properly for the tool: check that dates are formatted correctly, check that maturities are coded -1 through 6.) 
+| -> /Codes_useful/R.libraries.R (Downloads the R libraries necessary. Needs to be changed so that older versions of the packages are used. These can be found in my personal directory in the folder R_packages_not_in_CRAN. The packages are apsimr_1.2, lmeInfo_0.2.1, and soilDB_2.6.14, as tar.gz files.) 
+|2_weather_downloader.R (Downloads DAYMET weather for each location, generates weather_dt.rds. There’s an error here that the package APSIM is not found, but it doesn’t seem to prevent the script from generating weather_dt correctly.)
+| -> /Codes_useful/R.libraries.R (Same as before.)
+|3_soils_manager.R (Downloads soil data from each location using APssurgo tools, generates soils_sf and horizons_dt.)
+| -> /APssurgo_master/R/get_soils_parallel.R (Queries https://sdmdataaccess.nrcs.usda.gov/ for soil types of each location, generates soils_sf.rds. This will take a bit, but as long as information is being downloaded, just let it run. Despite the name, it is not actually parallel. Points if you can make it run in parallel though, this is the slowest part of the program.)
+| -> /APssurgo_master/R/get_horizons_parallel.R (Gets horizons information for each of the soil types, generates horizons_dt.rds.)
+|4_simA_manager.R (Runs the analysis once the .rds files are generated. It seems like everything past line 65 isn’t necessary.) 
+| -> 5_simB_setup.R (Constructs APSIM files.)
+|   -> 6_simC_make_met_files.R (Makes .met files, which are the weather data for the APSIM files. Should create files in trial_characterization_box/apsim_files/met_files in the format loc_#.met) 
+|   -> /APssurgo_master/R/calc_apsim_variables_onesoil.R (Calculates APSIM soil variables from horizons information.)
+|	    -> /APssurgo_master/R/SaxtonRawls.R (Calculates soil hydraulic parameters.)
+|   -> /APssurgo_master/R/make_apsoils_toolbox.R (Makes the trial_characterization.soils file at the bottom of apsim_files.)
+|   -> 7_simD_create_apsim_files.R (Makes APSIM files. They appear as many folders in the apsim_files folder, named in the format trial_#_crop. Each should contain a .apsim file with the same name.)
+| -> 8_simF_run_files.R (Runs APSIM files. Creates trial_#_crop.out and trial_#_crop.sum files in the apsim_files folders. This function changes depending on the computer you are running it on (ex: the lab server), because it is looking for copies of APSIM in different places. Please make this generic to any user and wherever they keep their copy of APSIM. Once 8 runs successfully, it’s all downhill from here.)
+| -> 9_simG_merge_results.R (Merge the output.) 
+| -> 10_simH_daily_to_yearly.R (Make yearly summaries. The final files should be in trial_characterization_box/output. They are apsim_output_daily.csv, characterization.csv, periods_code.csv, and map.pdf.)
+
+# Known Issues:
+- tool references APSIM in specific locations on whichever computer it is running on, should be generic to wherever it is running. 
+- weather data is missing for many locations 
+- tool requires older versions of some packages (which can be found in R_packages_not_in_CRAN)
+- tool contains unnecessary code, many unnecessary files
+- Codes/codes_useful is only used for R.libraries.R to load packages but doesn’t load all the packages necessary and does not load the older packages from their tar.gz files
+- collection of soil types in get_soils_parallel is not parallel and takes a while to run
+
 # Contact
 
 Questions about the code and methodology: German Mandrini, Dpt of Crop Sciences, University of Illinois at Urbana-Champaign, [germanmandrini@gmail.com](mailto:germanmandrini@gmail.com)
 
 Questions about collaborations: Nicolas F Martin, Dpt of Crop Sciences, University of Illinois at Urbana-Champaign, [nfmartin@illinois.edu](mailto:nfmartin@illinois.edu)
+
