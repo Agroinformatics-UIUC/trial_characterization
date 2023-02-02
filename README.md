@@ -23,6 +23,8 @@ Create an input .csv file formatted as following, where each row is one trial to
 
 # How to Run
 
+Install the packages in R_packages_not_in_CRAN.
+
 Create a results folder and place the input .csv inside.
 
 Open 1_input_to_sf.R, which is found in trial_characterization/Codes/1_input_to_sf.R.
