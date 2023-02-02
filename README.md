@@ -110,3 +110,5 @@ Questions about the code and methodology: German Mandrini, Dpt of Crop Sciences,
 
 Questions about collaborations: Nicolas F Martin, Dpt of Crop Sciences, University of Illinois at Urbana-Champaign, [nfmartin@illinois.edu](mailto:nfmartin@illinois.edu)
 
+Questions about changes made in this fork: Catherine Gilbert, Dpt of Crop Sciences, University of Illinois at Urbana-Champaign, [cmg3@illinois.edu](mailto:cmg3@illinois.edu)
+
