@@ -5,7 +5,7 @@ if(!exists("result_folder")) { #will use result_folder and code_folder if they w
 } 
 if(!exists("codes_folder")) {codes_folder <-'~/trial_characterization'} 
 
-source(paste0(codes_folder,'/Codes/Codes_useful/R.libraries.R'))
+source(paste0(codes_folder,'/Codes/R.libraries.R'))
 # ---------------------------------------------------------------------------------------------
 # Load the locs
 locs_sf <- readRDS('./trial_characterization_box/rds_files/locs_sf.rds')
@@ -93,7 +93,4 @@ results_list <- lapply(X = 1:nrow(locs_sf), function(x) download_weather(x))
 weather_dt <-  rbindlist(results_list)
 
 saveRDS(weather_dt, './trial_characterization_box/rds_files/weather_dt.rds')
-
-
-
 
