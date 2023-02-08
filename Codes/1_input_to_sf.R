@@ -2,9 +2,18 @@ rm(list=ls())
 
 result_folder <- "~/example_characterization" #set to full path to the folder that will hold the characterization results 
 #(you can arbitrarily make a new one, ex: soy_trials of what will become soy_trials/trial_characterization_box)
+<<<<<<< Updated upstream
 
 result_folder <- "~/Documents/example_characterization"
 
+=======
+<<<<<<< Updated upstream
+=======
+
+result_folder <- "~/Documents/iris_characterization"
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 setwd(result_folder) 
 codes_folder <-"~/trial_characterization" #set to full path to the folder with the codes 
 #(unless you change the name, that's trial_characterization of trial_characterization/Codes)
@@ -16,11 +25,24 @@ source(paste0(codes_folder,'/Codes/R.libraries.R'))
 # Load the input file, with coordinates and planting dates
 
 #trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
+<<<<<<< Updated upstream
 if(!dir.exists(result_folder)){dir.create(result_folder, recursive = TRUE)}
 if(!dir.exists('./trial_characterization_box/')){dir.create('./trial_characterization_box/', recursive = TRUE)}
 if(length(list.files(result_folder))==0) {print(paste0("Place the characterization input .csv in ",result_folder))}
+=======
+<<<<<<< Updated upstream
+if(!file.exists(result_folder)){dir.create(result_folder, recursive = TRUE)}
+if(!file.exists('./trial_characterization_box/')){dir.create('./trial_characterization_box/', recursive = TRUE)}
+if(length(list.files('./trial_characterization_box/')==0))
+  {print(paste0("Place the characterization input .csv in ",result_folder,"/trial_characterization_box/"))}
+=======
+if(!dir.exists(result_folder)){dir.create(result_folder, recursive = TRUE)}
+if(!dir.exists('./trial_characterization_box/')){dir.create('./trial_characterization_box/', recursive = TRUE)}
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 charact_dt <- list.files(result_folder) %>% .[grep(".csv",.)]
-if(any(grep(charact_dt,"input.csv")==TRUE)){
+if (length(charact_dt) == 0) {print(paste0("Place the characterization input .csv in ",result_folder))}
+if(any(grep(charact_dt,pattern="input.csv")==TRUE)){
   charact_dt<-"input.csv"
 } else {charact_dt<-charact_dt[1]}
 trials_dt <- data.table::fread(paste0(result_folder,"/",charact_dt)) 
