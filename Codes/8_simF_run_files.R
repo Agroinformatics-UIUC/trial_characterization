@@ -14,7 +14,8 @@ if(server){
     flist = list.files(directory, full.names = TRUE, recursive = TRUE, pattern = '.apsim')
     
     if(test_small) {
-      flist <- flist[str_detect(string = flist, pattern = '_1000_soybean|_1002_soybean|_1003_soybean')] #OJO!!!!
+      #flist <- flist[str_detect(string = flist, pattern = '_1000_soybean|_1002_soybean|_1003_soybean')] #OJO!!!!
+      flist <- flist[str_detect(string = flist, pattern = '_1_corn|_2_corn|_3_corn')]
     }
     
     # print(flist)
