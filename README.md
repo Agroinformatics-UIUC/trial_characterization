@@ -23,6 +23,8 @@ Create an input .csv file formatted as following, where each row is one trial to
 
 # How to Run
 
+If you don't have the last version of Classic APSIM (APSIM710-r4220), install it with all of the default settings. 
+
 Create a results folder and place the input .csv inside.
 
 Open 1_input_to_sf.R, which is found in trial_characterization/Codes/1_input_to_sf.R.
@@ -79,7 +81,7 @@ The variables are divided into periods (example: rain\_7 means rain during perio
 The climate characterization tool consists of the following files, which are found in the trial_characterization/Codes folder. The files run in order and call on the files indented below them. If all goes smoothly, the user should only need to run the top-level files: 1, 2, 3, and file 4 up to line 65.  
 
 * **1_input_to_sf\.R** (Sets working directory in the format result_folder <- "\~/example_characterization" ; setwd(wd), sets code directory in the format codes_folder <-'~/trial_characterization', creates trials_sf.rds from input file which should be in the results folder. Make sure that the input .csv is formatted properly for the tool: check that dates are formatted correctly, check that maturities are coded -1 through 6.)  
-    * **/Codes_useful/R.libraries.R** (Downloads the R libraries necessary. Uses older packages found in R_packages_not_in_CRAN. The packages are apsimr_1.2, lmeInfo_0.2.1, and soilDB_2.6.14, as tar.gz files.)   
+    * **R.libraries.R** (Downloads the R libraries necessary. Uses older packages found in R_packages_not_in_CRAN. The packages are apsimr_1.2, lmeInfo_0.2.1, and soilDB_2.6.14, as tar.gz files.)   
     * **R.libraries.R** (Downloads the R libraries necessary. Uses older packages found in R_packages_not_in_CRAN. The packages are apsimr_1.2, lmeInfo_0.2.1, and soilDB_2.6.14, as tar.gz files.)   
 * **2_weather_downloader\.R** (Downloads DAYMET weather for each location, generates weather_dt.rds. There’s an error here that the package APSIM is not found, but it doesn’t seem to prevent the script from generating weather_dt correctly.)   
     * **R.libraries.R** (Same as before.)   
@@ -98,7 +100,8 @@ The climate characterization tool consists of the following files, which are fou
     * **10_simH_daily_to_yearly.R** (Make yearly summaries. The final files should be in trial_characterization_box/output. They are apsim_output_daily.csv, characterization.csv, periods_code.csv, and map.pdf.)  
 
 # Known Issues:
-- tool references APSIM in specific locations on whichever computer it is running on, should be generic to wherever it is running. tool should probably switch to next gen APSIM and use the apsimx package to do that. 
+- tool references APSIM in specific locations on whichever computer it is running on, should be generic to wherever it is running. tool should probably switch to next gen APSIM and use the apsimx package to do that. that will also allow it to 
+run on systems other than Windows and remove its dependency on the outdated apsimr package. 
 - weather data is missing for many locations 
 - tool requires older versions of some packages (which can be found in R_packages_not_in_CRAN)
 - tool contains unnecessary code, many unnecessary files
