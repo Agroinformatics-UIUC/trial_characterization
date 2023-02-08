@@ -11,11 +11,11 @@ if(server){
     # apsim_exe <- '/usr/bin/mono /home/germanm2/apsim710_r4207/APSIMClassic/Model/Apsim.exe' #German compiled version in Aug2020
     apsim_exe <- '/usr/bin/mono /opt/APSIMClassic/Model/Apsim.exe' #Rodrigo compiled version in Aug2020
     
+    
     flist = list.files(directory, full.names = TRUE, recursive = TRUE, pattern = '.apsim')
     
     if(test_small) {
-      #flist <- flist[str_detect(string = flist, pattern = '_1000_soybean|_1002_soybean|_1003_soybean')] #OJO!!!!
-      flist <- flist[str_detect(string = flist, pattern = '_1_corn|_2_corn|_3_corn')]
+      flist <- flist[str_detect(string = flist, pattern = '_1000_soybean|_1002_soybean|_1003_soybean|_1_corn|_2_corn|_3_corn')]
     }
     
     # print(flist)
@@ -25,7 +25,6 @@ if(server){
     # start <- Sys.time()
     tst = system(paste('parallel -j 28 --eta', apsim_exe, '{} <', apsim_file), ignore.stdout = T, ignore.stderr = T)
     
-  
     # apsim_exe <- '/usr/bin/mono /opt/APSIMClassic/Model/Apsim.exe' 
     # apsim_file <- '/opt/APSIMClassic/test/765_2_18_stab_swat/765_2_18_stab_swat.apsim'
     # res <- suppressWarnings(system(paste(apsim_exe, apsim_file, sep = " "), show.output.on.console = FALSE))
@@ -71,7 +70,7 @@ if(server){
   
   # system2( 'C:/Program Files (x86)/APSIM710-r4207/Model/Apsim.exe',  flist[1] )
   # result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4158/Model/Apsim.exe',  x ))  
-  result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4207/Model/Apsim.exe',  x )) 
+  result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4220/Model/Apsim.exe',  x )) 
   
 
   # stopCluster(cl) 
@@ -97,6 +96,22 @@ if(server){
   
   tst = system(paste('parallel -j 28 --eta', apsim_exe, '{} <', file_name), ignore.stdout = T, ignore.stderr = T)
 
+  # -----------------------------------------------------------------------
+} else {
   
+  # WINDOWS
+  library(doParallel)
+  library(stringr)
+  no_cores <- detectCores() * 7/8
+  registerDoParallel(cores=no_cores)
+  cl <- parallel::makeCluster(no_cores, )
+  
+  flist = list.files(directory, full.names = TRUE, recursive = TRUE, pattern = '.apsim')
+  
+  # system2( 'C:/Program Files (x86)/APSIM710-r4207/Model/Apsim.exe',  flist[1] )
+  # result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4158/Model/Apsim.exe',  x ))  
+  result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4220/Model/Apsim.exe',  x )) 
+  
+  
+  # stopCluster(cl) 
 }
-

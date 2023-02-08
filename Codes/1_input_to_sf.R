@@ -3,13 +3,9 @@ rm(list=ls())
 result_folder <- "~/example_characterization" #set to full path to the folder that will hold the characterization results 
 #(you can arbitrarily make a new one, ex: soy_trials of what will become soy_trials/trial_characterization_box)
 
-result_folder <- "C:/Users/cmg3/Documents/example_characterization"
-
 setwd(result_folder) 
 codes_folder <-"~/trial_characterization" #set to full path to the folder with the codes 
 #(unless you change the name, that's trial_characterization of trial_characterization/Codes)
-
-codes_folder <-"C:/Users/cmg3/Documents/GitHub/trial_characterization"
 
 source(paste0(codes_folder,'/Codes/R.libraries.R'))
 # ---------------------------------------------------------------------------------------------
