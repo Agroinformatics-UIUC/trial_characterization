@@ -203,7 +203,7 @@ horizons_dt <- data.table::rbindlist(results_list_clean)
 
 info_dt <- data.table(soils_sf) %>% .[,.(id_loc, mukey, X, Y)]
 info_dt[,mukey := as.character(mukey)]
-horizons_dt <- merge(horizons_dt, info_dt, by = c('mukey')) %>% setcolorder(c('id_loc', 'mukey', 'X', 'Y'))
+horizons_dt <-left_join(info_dt, horizons_dt, multiple = "all") %>% setcolorder(c('id_loc', 'mukey', 'X', 'Y'))
 
 saveRDS(horizons_dt, "./trial_characterization_box/rds_files/horizons_dt.rds")
 

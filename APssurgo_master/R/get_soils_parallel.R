@@ -10,7 +10,7 @@
 # parallelized simulations 
 #===================================
 
-# loc_n=3
+# loc_n=86
 
 get_soils <- function(loc_n){
   packages_need <- c('sf', 'soilDB', 'dplyr', 'data.table')
@@ -32,6 +32,8 @@ get_soils <- function(loc_n){
   
     # ssurgo_sf_utm <- st_utm(ssurgo_sf)
     # one_loc_sf_utm  <- st_utm(one_loc_sf)
+    
+    if(any(st_is_valid(ssurgo_sf) == FALSE)) {ssurgo_sf<-st_make_valid(ssurgo_sf)}
     
     field_soils_tmp <- st_intersection(ssurgo_sf,one_loc_sf )
     
@@ -64,13 +66,14 @@ get_soils <- function(loc_n){
 # Obtain soils
 results_list <- list()
 for(loc_n in 1:nrow(locs_sf)){
-  print(loc_n)
+  #print(loc_n)
   
   #rerun until the soil is obtained (it fails often)
   uncompleted <- T
   while(uncompleted){
     results_list[[loc_n]] <- get_soils(loc_n)
     uncompleted <- length(results_list) < loc_n
+    print(loc_n)
   }
 }
 
