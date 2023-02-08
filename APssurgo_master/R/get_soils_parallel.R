@@ -33,6 +33,8 @@ get_soils <- function(loc_n){
     # ssurgo_sf_utm <- st_utm(ssurgo_sf)
     # one_loc_sf_utm  <- st_utm(one_loc_sf)
     
+    if(!st_is_valid(ssurgo_sf)) {ssurgo_sf <- st_make_valid(ssurgo_sf)}
+    
     field_soils_tmp <- st_intersection(ssurgo_sf,one_loc_sf )
     
     # tm_shape(ssurgo_sf) + tm_polygons('mukey') +
