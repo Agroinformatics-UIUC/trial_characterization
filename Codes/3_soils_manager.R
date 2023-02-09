@@ -5,12 +5,9 @@ if(!exists("result_folder")) {
 } 
 if(!exists("codes_folder")) {codes_folder <-'~/trial_characterization'} 
 
-source(paste0(codes_folder,'/Codes/Codes_useful/R.libraries.R'))
-
 # ---------------------------------------------------------------------------------------------
-# Load libraries and functions #################################################
-library(maps)
-library(maptools)
+# Load libraries and functions 
+source(paste0(codes_folder,'/Codes/R.libraries.R'))
 
 # Load the locs
 locs_sf <- readRDS('./trial_characterization_box/rds_files/locs_sf.rds')
@@ -18,7 +15,6 @@ locs_sf <- readRDS('./trial_characterization_box/rds_files/locs_sf.rds')
 #---------------------------------------------------------------
 # Step 1 Get the soils for each field
 source(paste0(codes_folder, '/APssurgo_master/R/get_soils_parallel.R'))
-'C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/get_soils_parallel.R'
 soils_sf <- readRDS('./trial_characterization_box/rds_files/soils_sf.rds')
 
 

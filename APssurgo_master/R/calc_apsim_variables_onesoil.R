@@ -97,7 +97,7 @@ calc_apsim_variables <- function(horizons_dt, region_n){
                     ifelse(horizon$center[-1] >= 100 & diff(horizon$OC) == 0,
                            horizon$OC[1]*exp(horizon$center[-1]*-0.035),
                            horizon$OC)) # exponential decay below 100 cm if data is missing
-    horizon[OC==0, OC := 0.001]
+    horizon[OC<0.01, OC := 0.01]
   
   
     # horizon$FInert <- ifelse(horizon$center<=1,0.4,

@@ -19,11 +19,11 @@ Create an input .csv file formatted as following, where each row is one trial to
 | Latitude | Latitude of the trial point |
 | Longitude | Longitude of the trial point |
 | Crop | soybean or maize |
-| Genetics | For soybean: maturity group (0 to 6, by 1) For corn: RM (80 to 130, by 5) |
+| Genetics | For soybean: maturity group (0 to 6, by 1) For maize: RM (80 to 130, by 5) |
 
 # How to Run
 
-Install the packages in R_packages_not_in_CRAN.
+If you don't have the last version of Classic APSIM (APSIM710-r4220), install it with all of the default settings. 
 
 Create a results folder and place the input .csv inside.
 
@@ -81,9 +81,9 @@ The variables are divided into periods (example: rain\_7 means rain during perio
 The climate characterization tool consists of the following files, which are found in the trial_characterization/Codes folder. The files run in order and call on the files indented below them. If all goes smoothly, the user should only need to run the top-level files: 1, 2, 3, and file 4 up to line 65.  
 
 * **1_input_to_sf\.R** (Sets working directory in the format result_folder <- "\~/example_characterization" ; setwd(wd), sets code directory in the format codes_folder <-'~/trial_characterization', creates trials_sf.rds from input file which should be in the results folder. Make sure that the input .csv is formatted properly for the tool: check that dates are formatted correctly, check that maturities are coded -1 through 6.)  
-    * **/Codes_useful/R.libraries.R** (Downloads the R libraries necessary. Needs to be changed so that older versions of the packages are used. These can be found in my personal directory in the folder R_packages_not_in_CRAN. The packages are apsimr_1.2, lmeInfo_0.2.1, and soilDB_2.6.14, as tar.gz files.)   
+    * **R.libraries.R** (Downloads the R libraries necessary. Uses older packages found in R_packages_not_in_CRAN. The packages are apsimr_1.2, lmeInfo_0.2.1, and soilDB_2.6.14, as tar.gz files.)   
 * **2_weather_downloader\.R** (Downloads DAYMET weather for each location, generates weather_dt.rds. There’s an error here that the package APSIM is not found, but it doesn’t seem to prevent the script from generating weather_dt correctly.)   
-    * **/Codes_useful/R.libraries.R** (Same as before.)   
+    * **R.libraries.R** (Same as before.)   
 * **3_soils_manager.R** (Downloads soil data from each location using APssurgo tools, generates soils_sf and horizons_dt.)  
     * **/APssurgo_master/R/get_soils_parallel.R** (Queries https://sdmdataaccess.nrcs.usda.gov/ for soil types of each location, generates soils_sf.rds. This will take a bit, but as long as information is being downloaded, just let it run. Despite the name, it is not actually parallel. Points if you can make it run in parallel though, this is the slowest part of the program.)  
     * **/APssurgo_master/R/get_horizons_parallel.R** (Gets horizons information for each of the soil types, generates horizons_dt.rds.)  
@@ -99,12 +99,15 @@ The climate characterization tool consists of the following files, which are fou
     * **10_simH_daily_to_yearly.R** (Make yearly summaries. The final files should be in trial_characterization_box/output. They are apsim_output_daily.csv, characterization.csv, periods_code.csv, and map.pdf.)  
 
 # Known Issues:
-- tool references APSIM in specific locations on whichever computer it is running on, should be generic to wherever it is running. 
+- only runs on Windows
+- tool references APSIM in specific locations on whichever computer it is running on, should be generic to wherever it is running
+- tool should probably switch to next gen APSIM and use the apsimx package instead of the outdated apsimr package. that change would also allow it to run on systems other than Windows. 
 - weather data is missing for many locations 
 - tool requires older versions of some packages (which can be found in R_packages_not_in_CRAN)
-- tool contains unnecessary code, many unnecessary files
-- Codes/codes_useful is only used for R.libraries.R to load packages but doesn’t load all the packages necessary and does not load the older packages from their tar.gz files
+- R.libraries.R loads way more packages than necessary
 - collection of soil types in get_soils_parallel is not parallel and takes a while to run
+- still some extraneous code left over from building the tool. the commented-out debugging options should stay, but not the code that isn't connected to the code that's running.
+- why are there two harvest rules in the model? 
 
 # Contact
 

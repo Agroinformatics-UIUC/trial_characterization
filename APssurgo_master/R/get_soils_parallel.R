@@ -66,11 +66,11 @@ get_soils <- function(loc_n){
 # Obtain soils
 results_list <- list()
 for(loc_n in 1:nrow(locs_sf)){
-  #print(loc_n)
   
   #rerun until the soil is obtained (it fails often)
   uncompleted <- T
   while(uncompleted){
+    print(loc_n)
     results_list[[loc_n]] <- get_soils(loc_n)
     uncompleted <- length(results_list) < loc_n
     print(loc_n)
