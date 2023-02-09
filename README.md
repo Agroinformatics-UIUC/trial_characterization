@@ -31,7 +31,7 @@ Open 1_input_to_sf.R, which is found in trial_characterization/Codes/1_input_to_
 
 Edit 1_input_to_sf.R line 3 to the full path to the results folder which has the input .csv. 
 
-Edit 1_input_to_sf.R line 6 to full path to where you have the trial_characterization folder. 
+Edit 1_input_to_sf.R line 7 to full path to where you have the trial_characterization folder. 
 
 Run files 1_input_to_sf.R, 2_weather_downloader.R, 3_soils_manager.R, and 4_simA_manager.R, which are found in trial_characterization/Codes. 
 
