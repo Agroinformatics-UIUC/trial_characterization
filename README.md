@@ -101,12 +101,13 @@ The climate characterization tool consists of the following files, which are fou
 # Known Issues:
 - only runs on Windows
 - tool references APSIM in specific locations on whichever computer it is running on, should be generic to wherever it is running
-- tool should probably switch to next gen APSIM and use the apsimx package instead of the outdated apsimr package. that change wouls also allow it to run on systems other than Windows. 
+- tool should probably switch to next gen APSIM and use the apsimx package instead of the outdated apsimr package. that change would also allow it to run on systems other than Windows. 
 - weather data is missing for many locations 
 - tool requires older versions of some packages (which can be found in R_packages_not_in_CRAN)
 - R.libraries.R loads way more packages than necessary
 - collection of soil types in get_soils_parallel is not parallel and takes a while to run
 - still some extraneous code left over from building the tool. the commented-out debugging options should stay, but not the code that isn't connected to the code that's running.
+- why are there two harvest rules in the model? 
 
 # Contact
 
