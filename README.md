@@ -103,8 +103,7 @@ The climate characterization tool consists of the following files, which are fou
 run on systems other than Windows and remove its dependency on the outdated apsimr package. 
 - weather data is missing for many locations 
 - tool requires older versions of some packages (which can be found in R_packages_not_in_CRAN)
-- tool contains unnecessary code, many unnecessary files
-- R.libraries.R loads more packages than necessary
+- R.libraries.R loads way more packages than necessary
 - collection of soil types in get_soils_parallel is not parallel and takes a while to run
 
 # Contact
