@@ -19,7 +19,7 @@ Create an input .csv file formatted as following, where each row is one trial to
 | Latitude | Latitude of the trial point |
 | Longitude | Longitude of the trial point |
 | Crop | soybean or maize |
-| Genetics | For soybean: maturity group (0 to 6, by 1) For corn: RM (80 to 130, by 5) |
+| Genetics | For soybean: maturity group (0 to 6, by 1) For maize: RM (80 to 130, by 5) |
 
 # How to Run
 
