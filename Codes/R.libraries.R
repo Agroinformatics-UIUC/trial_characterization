@@ -9,7 +9,6 @@ if(!(file.exists(file.path(.libPaths(), "apsimr", 'DESCRIPTION'))[1])){
   install.packages(paste0(codes_folder, "/R_packages_not_in_CRAN/apsimr_1.2.tar.gz"), repos = NULL, type = "source")
 }
   
-  
 if(!(file.exists(file.path(.libPaths(), "lmeInfo", 'DESCRIPTION'))[1])){
   install.packages(paste0(codes_folder, "/R_packages_not_in_CRAN/lmeInfo_0.2.1.tar.gz"), repos = NULL, type = "source")
 } else if (packageVersion("lmeInfo") != '0.2.1') {
@@ -34,8 +33,8 @@ if(!(file.exists(file.path(.libPaths(), "soilDB", 'DESCRIPTION'))[1])){
 #                      'gtable', 'soilDB', 'xml2', 'daymetr', 'soilDB', 'apsimr', 'lmeInfo') 
 
 list.of.packages <- c("devtools","XML","stringr","MuMIn","gstat","sp","sf","readxl",
-  "data.table","dplyr","snow","parallel","foreach","rgeos","stargazer","tmap",
-  "raster","rgdal","maptools","gridExtra","grDevices","spdep","lmtest",
+  "data.table","dplyr","snow","parallel","foreach","stargazer","tmap",
+  "raster","maptools","gridExtra","grDevices","spdep","lmtest",
   "splm","mgcv","daymetr","soilDB","apsimr","lmeInfo","maps","sirad","zoo")
 
 #of those, install missing packages

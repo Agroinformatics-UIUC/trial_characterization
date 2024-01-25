@@ -12,9 +12,9 @@ locs_sf <- readRDS('./trial_characterization_box/rds_files/locs_sf.rds')
 
 download_weather <- function(loc_n){
   # loc_n = 1
-  print(loc_n)
+  print(paste0(round(loc_n/nrow(locs_sf)*100,2),"%"))
   
-  packages_need <- c('APSIM', 'daymetr','dplyr', 'data.table', 'sf')
+  packages_need <- c('apsimr', 'daymetr','dplyr', 'data.table', 'sf')
   lapply(packages_need, require, character.only = TRUE)
   
   one_loc_dt <- data.table(locs_sf[loc_n,])

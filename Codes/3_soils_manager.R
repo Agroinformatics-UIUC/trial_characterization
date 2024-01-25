@@ -21,7 +21,6 @@ soils_sf <- readRDS('./trial_characterization_box/rds_files/soils_sf.rds')
 #---------------------------------------------------------------  
 # Step 2 get the horizons information
 source(paste0(codes_folder, '/APssurgo_master/R/get_horizons_parallel.R'))
-"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/get_horizons_parallel.R"
 
 horizons_dt <- readRDS("./trial_characterization_box/rds_files/horizons_dt.rds")
 
