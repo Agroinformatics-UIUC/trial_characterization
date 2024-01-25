@@ -5,7 +5,8 @@ library(XML)
 
 #---------------------------------------------------------
 # Load soils and horizons and select the ones for this trials
-soils_dt <- readRDS("./trial_characterization_box/rds_files/soils_sf.rds") %>% data.table() %>% .[,-'geometry']
+soils_sf <- readRDS("./trial_characterization_box/rds_files/soils_sf.rds")
+soils_dt <- data.table(soils_sf) %>% .[,-'geometry']
 # soils_dt <- soils_dt[id_loc == trials_tmp$id_loc]
 
 horizons_dt <- readRDS("./trial_characterization_box/rds_files/horizons_dt.rds") %>%
@@ -61,5 +62,3 @@ make_apsoils_toolbox(data_soils = horizons_dt2,
 "C:/Users/germanm2/Documents/trial_characterization_git/Codes/7_simD_create_apsim_files.R"
 "./trial_characterization_git/Codes/simD_create_apsim_files.R"
 source(paste0(codes_folder, '/Codes/7_simD_create_apsim_files.R'))
-
-

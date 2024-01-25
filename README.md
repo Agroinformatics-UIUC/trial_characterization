@@ -85,7 +85,7 @@ The climate characterization tool consists of the following files, which are fou
 * **2_weather_downloader\.R** (Downloads DAYMET weather for each location, generates weather_dt.rds.)   
     * **R.libraries.R** (Same as before.)   
 * **3_soils_manager.R** (Downloads soil data from each location using APssurgo tools, generates soils_sf and horizons_dt.)  
-    * **/APssurgo_master/R/get_soils_parallel.R** (Queries https://sdmdataaccess.nrcs.usda.gov/ for soil types of each location, generates soils_sf.rds. Despite the name, it is not actually parallel.)  
+    * **/APssurgo_master/R/get_soils_parallel.R** (Queries https://sdmdataaccess.nrcs.usda.gov/ for soil types (mukeys) of each location, generates soils_sf.rds. Despite the name, it is not actually parallel.)  
     * **/APssurgo_master/R/get_horizons_parallel.R** (Gets horizons information for each of the soil types, generates horizons_dt.rds.)  
 * **4_simA_manager.R** (Runs the analysis once the .rds files are generated.)   
     * **5_simB_setup.R** (Constructs APSIM files.)  
@@ -94,7 +94,7 @@ The climate characterization tool consists of the following files, which are fou
             * **/APssurgo_master/R/SaxtonRawls.R** (Calculates soil hydraulic parameters.)  
         * **/APssurgo_master/R/make_apsoils_toolbox.R** (Makes the trial_characterization.soils file at the bottom of apsim_files.)  
         * **7_simD_create_apsim_files.R** (Makes APSIM files. They appear as many folders in the apsim_files folder, named in the format trial_#_crop. Each should contain a .apsim file with the same name.)  
-    * **8_simF_run_files.R** (Runs APSIM files. Creates trial\_#\_crop.out and trial\_#\_crop.sum files in the apsim_files folders. This function changes depending on the computer you are running it on (ex: the lab server), because it is looking for copies of APSIM in different places. Please make this generic to any user and wherever they keep their copy of APSIM. Once 8 runs successfully, it’s all downhill from here.)  
+    * **8_simF_run_files.R** (Runs APSIM files. Creates trial\_#\_crop.out and trial\_#\_crop.sum files in the apsim_files folders. This function changes depending on the computer you are running it on (ex: the lab server), because it is looking for copies of APSIM in different places. Please make this generic to any user and wherever they keep their copy of APSIM. Once 8 runs successfully, it’s all downhill from here.) 
     * **9_simG_merge_results.R** (Merge the output.)   
     * **10_simH_daily_to_yearly.R** (Make yearly summaries. The final files should be in trial_characterization_box/output. They are apsim_output_daily.csv, characterization.csv, periods_code.csv, and map.pdf.)  
 
