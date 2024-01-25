@@ -18,33 +18,16 @@ get_soils <- function(loc_n){
   
   one_loc_sf <- locs_sf[loc_n,]
   
-  one_loc_box <- st_bbox(one_loc_sf)
-  one_loc_box[[3]] <- one_loc_box[[1]]+ 0.00002
-  one_loc_box[[4]] <- one_loc_box[[2]]+ 0.00002
-  
   possibleError <- tryCatch({
-    ssurgo_pol <- mapunit_geom_by_ll_bbox(one_loc_box)
     
-    ssurgo_sf <- st_as_sf(ssurgo_pol)
-    st_crs(ssurgo_sf) <- 4326
-    # ssurgo_sf <- st_transform(ssurgo_sf, 4326)
-    ssurgo_sf <- dplyr::select(ssurgo_sf, mukey)
+    ssurgo_pol <- SDA_spatialQuery(one_loc_sf)
+    
+    ssurgo_sf <- st_as_sf(cbind(ssurgo_pol["mukey"], one_loc_sf))
   
-    # ssurgo_sf_utm <- st_utm(ssurgo_sf)
-    # one_loc_sf_utm  <- st_utm(one_loc_sf)
-    
     if(any(st_is_valid(ssurgo_sf) == FALSE)) {ssurgo_sf<-st_make_valid(ssurgo_sf)}
     
-    field_soils_tmp <- st_intersection(ssurgo_sf,one_loc_sf )
-    
-    # tm_shape(ssurgo_sf) + tm_polygons('mukey') +
-    #   tm_shape(field_soils_tmp) + tm_dots(size = 2)
-    
-    # tm_shape(field_soils_tmp) + tm_polygons('mukey') +
-    #   tm_layout(main.title = 'Map units')# + tm_text('mukey')
-  
-    field_soils_tmp$area_ha <- round(as.numeric(st_area(field_soils_tmp))/10000,6)
-    field_soils_tmp <- field_soils_tmp %>% dplyr::filter(area_ha == max(area_ha))
+    field_soils_tmp <- ssurgo_sf
+
   }, error = function(e) e)
   
   #REAL WORK:if there is no error
@@ -70,10 +53,9 @@ for(loc_n in 1:nrow(locs_sf)){
   #rerun until the soil is obtained (it fails often)
   uncompleted <- T
   while(uncompleted){
-    print(loc_n)
+    print(paste0(round(loc_n/nrow(locs_sf)*100,2),"%"))
     results_list[[loc_n]] <- get_soils(loc_n)
     uncompleted <- length(results_list) < loc_n
-    print(loc_n)
   }
 }
 

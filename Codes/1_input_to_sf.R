@@ -2,10 +2,12 @@ rm(list=ls())
 
 result_folder <- "~/example_characterization" #set to full path to the folder that will hold the characterization results 
 #(you can arbitrarily make a new one, ex: soy_trials of what will become soy_trials/trial_characterization_box)
+#result_folder <- "/Users/cmg3/Documents/example_characterization"
 
 setwd(result_folder) 
 codes_folder <-"~/trial_characterization" #set to full path to the folder with the codes 
 #(unless you change the name, that's trial_characterization of trial_characterization/Codes)
+#codes_folder <-"/Users/cmg3/Documents/GitHub/trial_characterization"
 
 source(paste0(codes_folder,'/Codes/R.libraries.R'))
 # ---------------------------------------------------------------------------------------------
@@ -49,7 +51,6 @@ trials_sf <- cbind(trials_sf, st_coordinates(trials_sf)) %>%
         mutate(id_trial = row_number())
 
 # Find unique fields and called them location. A trial is an year x loc combination
-
 locs_sf <- st_difference(trials_sf) %>% mutate(id_loc = row_number()) %>% dplyr::select(id_loc, X,Y)
   
 
@@ -66,3 +67,4 @@ if(!file.exists('./trial_characterization_box/rds_files')){dir.create('./trial_c
 
 saveRDS(trials_sf, './trial_characterization_box/rds_files/trials_sf.rds')
 saveRDS(locs_sf, './trial_characterization_box/rds_files/locs_sf.rds')
+

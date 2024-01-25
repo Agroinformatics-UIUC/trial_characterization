@@ -82,12 +82,12 @@ The climate characterization tool consists of the following files, which are fou
 
 * **1_input_to_sf\.R** (Sets working directory in the format result_folder <- "\~/example_characterization" ; setwd(wd), sets code directory in the format codes_folder <-'~/trial_characterization', creates trials_sf.rds from input file which should be in the results folder. Make sure that the input .csv is formatted properly for the tool: check that dates are formatted correctly, check that maturities are coded -1 through 6.)  
     * **R.libraries.R** (Downloads the R libraries necessary. Uses older packages found in R_packages_not_in_CRAN. The packages are apsimr_1.2, lmeInfo_0.2.1, and soilDB_2.6.14, as tar.gz files.)   
-* **2_weather_downloader\.R** (Downloads DAYMET weather for each location, generates weather_dt.rds. There’s an error here that the package APSIM is not found, but it doesn’t seem to prevent the script from generating weather_dt correctly.)   
+* **2_weather_downloader\.R** (Downloads DAYMET weather for each location, generates weather_dt.rds.)   
     * **R.libraries.R** (Same as before.)   
 * **3_soils_manager.R** (Downloads soil data from each location using APssurgo tools, generates soils_sf and horizons_dt.)  
-    * **/APssurgo_master/R/get_soils_parallel.R** (Queries https://sdmdataaccess.nrcs.usda.gov/ for soil types of each location, generates soils_sf.rds. This will take a bit, but as long as information is being downloaded, just let it run. Despite the name, it is not actually parallel. Points if you can make it run in parallel though, this is the slowest part of the program.)  
+    * **/APssurgo_master/R/get_soils_parallel.R** (Queries https://sdmdataaccess.nrcs.usda.gov/ for soil types of each location, generates soils_sf.rds. Despite the name, it is not actually parallel.)  
     * **/APssurgo_master/R/get_horizons_parallel.R** (Gets horizons information for each of the soil types, generates horizons_dt.rds.)  
-* **4_simA_manager.R** (Runs the analysis once the .rds files are generated. It seems like everything past line 65 isn’t necessary.)   
+* **4_simA_manager.R** (Runs the analysis once the .rds files are generated.)   
     * **5_simB_setup.R** (Constructs APSIM files.)  
         * **6_simC_make_met_files.R** (Makes .met files, which are the weather data for the APSIM files. Should create files in trial_characterization_box/apsim_files/met_files in the format loc_#.met)   
         * **/APssurgo_master/R/calc_apsim_variables_onesoil.R** (Calculates APSIM soil variables from horizons information.)  
@@ -105,7 +105,6 @@ The climate characterization tool consists of the following files, which are fou
 - weather data is missing for many locations 
 - tool requires older versions of some packages (which can be found in R_packages_not_in_CRAN)
 - R.libraries.R loads way more packages than necessary
-- collection of soil types in get_soils_parallel is not parallel and takes a while to run
 - still some extraneous code left over from building the tool. the commented-out debugging options should stay, but not the code that isn't connected to the code that's running.
 - why are there two harvest rules in the model? 
 
