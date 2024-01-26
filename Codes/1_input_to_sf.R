@@ -1,6 +1,6 @@
 rm(list=ls())
 
-result_folder <- "~/example_characterization" #set to full path to the folder that will hold the characterization results 
+result_folder <- "~/small_example_characterization" #set to full path to the folder that will hold the characterization results 
 #(you can arbitrarily make a new one, ex: soy_trials of what will become soy_trials/trial_characterization_box)
 #result_folder <- "~/Users/cmg3/Documents/example_characterization"
 
