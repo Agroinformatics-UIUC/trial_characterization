@@ -112,6 +112,10 @@ if(server){
   # result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4158/Model/Apsim.exe',  x ))  
   result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4220/Model/Apsim.exe',  x )) 
   
+  #for (n in 1: length(flist)){
+  #  system2( 'C:/Program Files (x86)/APSIM710-r4220/Model/Apsim.exe',  flist[n])
+  #  print(n/length(flist))
+  #}
   
   # stopCluster(cl) 
 }

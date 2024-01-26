@@ -31,17 +31,17 @@ if(!(file.exists(file.path(.libPaths(), "lmeInfo", 'DESCRIPTION'))[1])){
 #                      'rgdal', 'maptools','gridExtra', 'MuMIn', 'maptools', 'spdep', 'lmtest', 'mgcv', 'grid',
 #                      'gtable', 'soilDB', 'xml2', 'daymetr', 'soilDB', 'apsimr', 'lmeInfo') 
 
-list.of.packages <- c("devtools","XML","stringr","MuMIn","gstat","sp","sf","readxl",
-  "data.table","devtools","dplyr","snow","parallel","foreach","stargazer","tmap",
-  "raster","gridExtra","grDevices","spdep","lmtest","urbnmapr",
-  "splm","mgcv","daymetr","soilDB","apsimr","lmeInfo","maps","sirad","zoo")
+# list.of.packages <- c("devtools","XML","stringr","MuMIn","gstat","sp","sf","readxl",
+#   "data.table","devtools","dplyr","snow","parallel","foreach","stargazer","tmap",
+#   "raster","gridExtra","grDevices","spdep","lmtest","urbnmapr",
+#   "splm","mgcv","daymetr","soilDB","apsimr","lmeInfo","maps","sirad","zoo")
 
 #definitely needed
-#dplyr, devtools, sf, sp, spData, tmap, daymetr, data.table, 
+#dplyr, devtools, sf, sp, spData, tmap, daymetr, data.table, iterators
 #soilDB, snow, parallel, stringr, urbnmapr, XML, xml2, tools, zoo
 
 list.of.packages <- c("dplyr", "devtools", "sf", "sp", "spData", "tmap", "daymetr", "data.table", 
-  "soilDB", "snow", "parallel", "stringr", "urbnmapr", "XML", "xml2", "tools", "zoo")
+  "soilDB", "snow", "parallel", "stringr", "urbnmapr", "XML", "xml2", "tools", "zoo", "foreach", "iterators")
 
 #of those, install missing packages
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]

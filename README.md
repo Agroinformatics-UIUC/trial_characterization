@@ -102,6 +102,7 @@ The climate characterization tool consists of the following files, which are fou
 - only runs on Windows
 - tool references APSIM in specific locations on whichever computer it is running on, should be generic to wherever it is running
 - tool should probably switch to next gen APSIM and use the apsimx package instead of the outdated apsimr package. that change would also allow it to run on systems other than Windows. 
+- why does 6 give every met file the same coords? is this a mistake?
 - weather data is missing for many locations 
 - tool requires older versions of some packages (which can be found in R_packages_not_in_CRAN)
 - R.libraries.R loads way more packages than necessary
