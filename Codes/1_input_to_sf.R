@@ -12,6 +12,7 @@ codes_folder <-"~/GitHub/trial_characterization" #set to full path to the folder
 source(paste0(codes_folder,'/Codes/R.libraries.R'))
 # ---------------------------------------------------------------------------------------------
 # Load the input file, with coordinates and planting dates
+# Place input file in the result folder
 
 #trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
 

@@ -105,7 +105,6 @@ The climate characterization tool consists of the following files, which are fou
 - why does 6 give every met file the same coords? is this a mistake?
 - weather data is missing for many locations 
 - tool requires older versions of some packages (which can be found in R_packages_not_in_CRAN)
-- R.libraries.R loads way more packages than necessary
 - still some extraneous code left over from building the tool. the commented-out debugging options should stay, but not the code that isn't connected to the code that's running.
 - why are there two harvest rules in the model? 
 
