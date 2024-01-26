@@ -81,7 +81,7 @@ The variables are divided into periods (example: rain\_7 means rain during perio
 The climate characterization tool consists of the following files, which are found in the trial_characterization/Codes folder. The files run in order and call on the files indented below them. If all goes smoothly, the user should only need to run the top-level files: 1, 2, 3, and 4.  
 
 * **1_input_to_sf\.R** (Sets working directory in the format result_folder <- "\~/example_characterization" ; setwd(wd), sets code directory in the format codes_folder <-"~/trial_characterization"", creates trials_sf.rds from input file which should be in the results folder. Make sure that the input .csv is formatted properly for the tool: check that dates are formatted correctly, check that maturities are coded -1 through 6.)  
-    * **R.libraries.R** (Downloads the R libraries necessary. Uses older packages found in R_packages_not_in_CRAN. The packages are apsimr_1.2 and lmeInfo_0.2.1 as tar.gz files.)   
+    * **R.libraries.R** (Installs and loads the R libraries necessary. The package apsimr_1.2 is no longer supported and is installed from a tar.gz file in trial_characterization_box/R_packages_not_in_CRAN.)   
 * **2_weather_downloader\.R** (Downloads DAYMET weather for each location, generates weather_dt.rds.)   
     * **R.libraries.R** (Same as before.)
 * **3_soils_manager.R** (Downloads soil data from each location using APssurgo tools, generates soils_sf and horizons_dt.)  
