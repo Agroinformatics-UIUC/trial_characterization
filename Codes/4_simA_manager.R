@@ -57,3 +57,4 @@ time_track_tmp <- data.table(trials = nrow(trials_dt),
 print(time_track_tmp)
 
 saveRDS(time_track_tmp, './trial_characterization_box/rds_files/time_track.rds')
+
