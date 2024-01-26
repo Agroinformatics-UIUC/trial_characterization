@@ -132,8 +132,7 @@ make_yearly_summary <- function(daily_dt){
     facet_free(.~period)
   
   
-  period_wide_dt <- dcast(period_dt, id_trial ~ period, value.var = c('rain', 'radn', 'MaxT', 'MinT', 'swdef_expan', 'period_start_doy'))
-  
+  period_wide_dt <- data.table::dcast(period_dt, id_trial ~ period, value.var = c('rain', 'radn', 'MaxT', 'MinT', 'swdef_expan', 'period_start_doy'))
   
   #--------------------------
   # Get some year variables (are not by period)
@@ -168,8 +167,6 @@ make_yearly_summary <- function(daily_dt){
 #----------------------------------------------------------------------------
 
 daily_dt <- readRDS('./trial_characterization_box/rds_files/apsim_output_daily.rds')
-
-c(1:127)[!1:127 %in% (daily_dt$id_trial %>% unique())]
 
 characterization_dt <- make_yearly_summary(daily_dt)
 
