@@ -16,14 +16,6 @@ if(!(file.exists(file.path(.libPaths(), "apsimr", 'DESCRIPTION'))[1])){
   remove.packages("apsimr")
   install.packages(paste0(codes_folder, "/R_packages_not_in_CRAN/apsimr_1.2.tar.gz"), repos = NULL, type = "source")
 }
-  
-if(!(file.exists(file.path(.libPaths(), "lmeInfo", 'DESCRIPTION'))[1])){
-  install.packages(paste0(codes_folder, "/R_packages_not_in_CRAN/lmeInfo_0.2.1.tar.gz"), repos = NULL, type = "source")
-} else if (packageVersion("lmeInfo") != '0.2.1') {
-  unload("lmeInfo")
-  remove.packages("lmeInfo")
-  install.packages(paste0(codes_folder, "/R_packages_not_in_CRAN/lmeInfo_0.2.1.tar.gz"), repos = NULL, type = "source")
-}
 
 #what packages will we need?
 
@@ -37,7 +29,7 @@ if(!(file.exists(file.path(.libPaths(), "lmeInfo", 'DESCRIPTION'))[1])){
 #soilDB, snow, parallel, stringr, urbnmapr, XML, xml2, tools, zoo
 
 list.of.packages <- c("dplyr", "devtools", "sf", "sp", "spData", "tmap", "daymetr", "data.table", "reshape2",
-  "soilDB", "snow", "parallel", "stringr", "urbnmapr", "XML", "xml2", "tools", "zoo", "foreach", "iterators")
+  "soilDB", "parallel", "snow", "stringr", "urbnmapr", "XML", "xml2", "tools", "zoo", "foreach", "iterators")
 
 #of those, install missing packages
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]

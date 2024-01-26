@@ -23,27 +23,23 @@ trials_dt <- readRDS("./trial_characterization_box/rds_files/trials_sf.rds") %>%
 
 # CREATE ALL FILES
 start1 <- Sys.time()
-"C:/Users/germanm2/Documents/trial_characterization_git/Codes/5_simB_setup.R"
 "./trial_characterization_git/Codes/5_simB_setup.R"
 source(paste0(codes_folder, '/Codes/5_simB_setup.R'))
 instructions_rows <- nrow(trials_dt)
 
 #RUN ALL APSIM FILES
 start2 <- Sys.time()
-"C:/Users/germanm2/Documents/trial_characterization_git/Codes/8_simF_run_files.R"
 "./trial_characterization_git/Codes/8_simF_run_files.R"
 source(paste0(codes_folder, '/Codes/8_simF_run_files.R'))
 
 #MERGE ALL THE OUTPUT
 start3 <- Sys.time()
-"C:/Users/germanm2/Documents/trial_characterization_git/Codes/9_simG_merge_results.R"
 "./trial_characterization_git/Codes/9_simG_merge_results.R"
 source(paste0(codes_folder, '/Codes/9_simG_merge_results.R'))
 
 start4 <- Sys.time()
 
 #MAKE YEARLY SUMMARY
-"C:/Users/germanm2/Documents/trial_characterization_git/Codes/10_simH_daily_to_yearly.R"
 './trial_characterization_git/Codes/10_simH_daily_to_yearly.R'
 source(paste0(codes_folder, '/Codes/10_simH_daily_to_yearly.R'))
   
