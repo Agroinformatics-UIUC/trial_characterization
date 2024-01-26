@@ -26,10 +26,6 @@ if(!(file.exists(file.path(.libPaths(), "lmeInfo", 'DESCRIPTION'))[1])){
 }
 
 #what packages will we need?
-#list.of.packages <- c('Hmisc','splm', 'geosphere', 'stringr', 'stargazer', 'sf','grDevices', 'XML', 'gstat','sp',
-#                      'data.table', 'dplyr', 'snow', 'readxl', 'parallel', 'foreach', 'rgeos', 'tmap', 'raster', 
-#                      'rgdal', 'maptools','gridExtra', 'MuMIn', 'maptools', 'spdep', 'lmtest', 'mgcv', 'grid',
-#                      'gtable', 'soilDB', 'xml2', 'daymetr', 'soilDB', 'apsimr', 'lmeInfo') 
 
 # list.of.packages <- c("devtools","XML","stringr","MuMIn","gstat","sp","sf","readxl",
 #   "data.table","devtools","dplyr","snow","parallel","foreach","stargazer","tmap",
@@ -40,7 +36,7 @@ if(!(file.exists(file.path(.libPaths(), "lmeInfo", 'DESCRIPTION'))[1])){
 #dplyr, devtools, sf, sp, spData, tmap, daymetr, data.table, iterators
 #soilDB, snow, parallel, stringr, urbnmapr, XML, xml2, tools, zoo
 
-list.of.packages <- c("dplyr", "devtools", "sf", "sp", "spData", "tmap", "daymetr", "data.table", 
+list.of.packages <- c("dplyr", "devtools", "sf", "sp", "spData", "tmap", "daymetr", "data.table", "reshape2",
   "soilDB", "snow", "parallel", "stringr", "urbnmapr", "XML", "xml2", "tools", "zoo", "foreach", "iterators")
 
 #of those, install missing packages
