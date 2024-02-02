@@ -16,23 +16,6 @@ horizons_dt <- horizons_dt[mukey %in% soils_dt$mukey]
 weather_dt <- readRDS('./trial_characterization_box/rds_files/weather_dt.rds')
 # weather_dt <- weather_dt[id_loc == trials_tmp$id_loc & year == trials_tmp$year]
 
-#---------------------------------------------------------
-# Set the folder where the apsim files will be saved
-if(server){
-  directory <- '/home/germanm2/apsim_temp/trial_characterization'
-}else if(cpsc){
-  directory <- paste('C:/apsim_temp/', Sys.info()["nodename"],'/trial_characterization', sep = '')
-}else if(cluster){
-  directory <- '/projects/aces/germanm2/trial_characterization'
-  # directory <- paste('/home/germanm2/scratch/apsim_temp/trial', trial_n, sep = '')
-  # directory <- paste('/projects/aces/germanm2/scratch/trial', trial_n, sep = '')
-}
-
-directory <- "./trial_characterization_box/apsim_files"  #must start with ./ 
-
-unlink(directory, recursive=TRUE)
-dir.create(directory, recursive = TRUE)
-
 
 #----------------------------------------------------------------------------
 # WEATHER FILES

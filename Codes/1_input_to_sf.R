@@ -46,12 +46,10 @@ tmap_save(plot1,
 # Intersect with US map, in case there are some trials in other countries. We may not have SSURGO and DAYMET data in those
 trials_sf <- st_intersection(trials_sf, us_states4326.sf)
 
-
 # Add coordinates and id_trial (unique identifier for trial x year)
-trials_sf <- cbind(trials_sf, st_coordinates(trials_sf)) %>% 
-        mutate(id_trial = row_number())
+trials_sf <- cbind(trials_sf, st_coordinates(trials_sf)) %>% mutate(id_trial = row_number())
 
-# Find unique fields and called them location. A trial is an year x loc combination
+# Find unique fields and called them location.
 locs_sf <- st_difference(trials_sf) %>% mutate(id_loc = row_number()) %>% dplyr::select(id_loc, X,Y)
   
 

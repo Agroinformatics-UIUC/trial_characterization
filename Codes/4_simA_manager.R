@@ -21,6 +21,12 @@ trials_dt <- readRDS("./trial_characterization_box/rds_files/trials_sf.rds") %>%
   data.table() %>% .[,-'geometry']
 
 
+#---------------------------------------------------------
+# Set the folder where the apsim files will be saved
+directory <- "./trial_characterization_box/apsim_files"  #must start with ./ 
+unlink(directory, recursive=TRUE)
+dir.create(directory, recursive = TRUE)
+
 # CREATE ALL FILES
 start1 <- Sys.time()
 "./trial_characterization_git/Codes/5_simB_setup.R"
@@ -42,8 +48,6 @@ start4 <- Sys.time()
 #MAKE YEARLY SUMMARY
 './trial_characterization_git/Codes/10_simH_daily_to_yearly.R'
 source(paste0(codes_folder, '/Codes/10_simH_daily_to_yearly.R'))
-  
-unlink(directory, recursive = TRUE)
   
 start5 <- Sys.time()
 
