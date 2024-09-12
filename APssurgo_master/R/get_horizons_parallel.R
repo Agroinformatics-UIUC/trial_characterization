@@ -116,7 +116,7 @@ get_horizons <- function(mukey_n, soilLayer_breaks = c(5,10,15,20,40,60,80,100,1
     setnames(old_cols, new_cols)
   
   # Bin slope groups
-  hydrogroup <- readRDS("./Trial_crct_DIFM/Data/APssurgo_master/R/hydrogroup.rds")
+  hydrogroup <- readRDS(paste0(codes_folder,"/APssurgo_master/R/hydrogroup.rds"))
   h <- h[,slope_code := .bincode(slope, breaks=c(-0.01,2,5,10,100))] %>% #had to put -0.01 to avoid NA when slope is 0
     merge(hydrogroup, by = c("hydrogroup", "slope_code"), all.x = TRUE)
   
@@ -191,9 +191,9 @@ get_horizons <- function(mukey_n, soilLayer_breaks = c(5,10,15,20,40,60,80,100,1
 }
 
 
-keep <- c('keep','Int', 'get_horizons')
+keep <- c('keep','Int', 'get_horizons','codes_folder')
 
-clusterExport(cl, varlist = keep, envir=environment())
+parallel::clusterExport(cl, varlist = keep, envir=environment())
 
 results_list <- parLapply(cl, unique(soils_sf$mukey), function(x) get_horizons(x))
 
@@ -203,9 +203,9 @@ horizons_dt <- data.table::rbindlist(results_list_clean)
 
 info_dt <- data.table(soils_sf) %>% .[,.(id_loc, mukey, X, Y)]
 info_dt[,mukey := as.character(mukey)]
-horizons_dt <- merge(horizons_dt, info_dt, by = c('mukey')) %>% setcolorder(c('id_loc', 'mukey', 'X', 'Y'))
+horizons_dt <- left_join(horizons_dt, info_dt, multiple = "all", relationship = "many-to-many") %>% setcolorder(c('id_loc', 'mukey', 'X', 'Y'))
 
-saveRDS(horizons_dt, "./trial_characterization_box/Data/rds_files/horizons_dt.rds")
+saveRDS(horizons_dt, "./trial_characterization_box/rds_files/horizons_dt.rds")
 
 # results_list <- list()
 # for(mukey_n in sort(unique(grid10_soils_v2_sf$mukey))[2742:length(unique(grid10_soils_v2_sf$mukey))]){

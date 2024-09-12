@@ -86,5 +86,5 @@ daily_dt <- daily_dt[order(id_trial)]
 
 #SAVE THE OUTPUT
 
-saveRDS(daily_dt, './trial_characterization_box/Data/rds_files/apsim_output_daily.rds')
-data.table::fwrite(daily_dt, './trial_characterization_box/Data/output/apsim_output_daily.csv')
+saveRDS(daily_dt, './trial_characterization_box/rds_files/apsim_output_daily.rds')
+data.table::fwrite(daily_dt, './trial_characterization_box/output/apsim_output_daily.csv')

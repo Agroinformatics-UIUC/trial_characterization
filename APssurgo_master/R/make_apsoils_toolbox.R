@@ -1,8 +1,8 @@
-source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/R/latlong2county.R'))
-"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/latlong2county.R"
+counties_sf <- st_transform(get_urbn_map(map = "counties", sf = T), crs = sf::st_crs(4326))
+county_ref <- st_join(soils_sf,counties_sf)
 
 library(maps)
-library(maptools)
+#library(maptools)
 
 if(FALSE){
   data_soils = horizons_dt2
@@ -18,12 +18,14 @@ make_apsoils_toolbox <- function(data_soils, path, badge_name, crops) {
                                               name= badge_name))
 
   soil_seq <- sort(as.numeric(unique(data_soils$mukey)))
-  for(soil_n in soil_seq){
-      # soil_n = soil_seq[2]
+  for(n in 1:length(soil_seq)){
+      # n = 2
+        
+      soil_n <- soil_seq[n]
   
       data_soil <- data_soils[mukey == soil_n]
   
-      print(paste0('/ mukey: ', soil_n))
+      print(paste0(round((n/length(soil_seq))*100,2),"% / mukey: ", soil_n))
   
       ## <Soil name="Default">
       # Soil <- newXMLNode("Soil", attrs = list(name = paste(tolower(soil_n))),
@@ -41,7 +43,7 @@ make_apsoils_toolbox <- function(data_soils, path, badge_name, crops) {
   
       ### <Region>Story</Region>
       # county <- capitalize(latlong2county(lat=mean(data_soil$Y), long=mean(data_soil$X)))
-      county <- latlong2county(lat=mean(data_soil$Y), long=mean(data_soil$X))
+      county <- county_ref[county_ref$mukey == soil_n,"county_name"]
       Region <- newXMLNode("Region",parent = Soil)
       xmlValue(Region) <- county[2]
   

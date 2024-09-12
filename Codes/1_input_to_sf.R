@@ -1,27 +1,34 @@
 rm(list=ls())
-# Set the working directory to the folder with the data
-# Set the codes_folder to the folder with the codes
 
+result_folder <- "~/small_example_characterization" #set to full path to the folder that will hold the characterization results 
+#(you can arbitrarily make a new one, ex: soy_trials of what will become soy_trials/trial_characterization_box)
+#result_folder <- "~/Users/cmg3/Documents/example_characterization"
 
-setwd('C:/Users/germa/Box Sync/My_Documents') #Dell
-codes_folder <-'C:/Users/germa/Documents'#Dell
-# setwd('C:/Users/germanm2/Box Sync/My_Documents')#CPSC
-# codes_folder <-'C:/Users/germanm2/Documents'#CPSC
-# setwd('~')#Server
-# codes_folder <-'~' #Server
+setwd(result_folder) 
+codes_folder <-"~/GitHub/trial_characterization" #set to full path to the folder with the codes 
+#(unless you change the name, that's trial_characterization of trial_characterization/Codes)
+#codes_folder <-"/Users/cmg3/Documents/GitHub/trial_characterization"
 
-
-source('./Codes_useful/R.libraries.R')
+source(paste0(codes_folder,'/Codes/R.libraries.R'))
 # ---------------------------------------------------------------------------------------------
 # Load the input file, with coordinates and planting dates
+# Place input file in the result folder
 
-trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
+#trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
+
+if(!dir.exists(result_folder)){dir.create(result_folder, recursive = TRUE)}
+if(!dir.exists('./trial_characterization_box/')){dir.create('./trial_characterization_box/', recursive = TRUE)}
+if(length(list.files(result_folder))==0) {print(paste0("Place the characterization input .csv in ",result_folder))}
+
+charact_dt <- list.files(result_folder) %>% .[grep(".csv",.)]
+if (length(charact_dt) == 0) {print(paste0("Place the characterization input .csv in ",result_folder))}
+if(any(grep(charact_dt,pattern="input.csv")==TRUE)){
+  charact_dt<-"input.csv"
+} else {charact_dt<-charact_dt[1]}
+trials_dt <- data.table::fread(paste0(result_folder,"/",charact_dt)) 
+
 trials_dt[,Crop := tolower(Crop)]
-# (bushels x 60 lbs/bu x 0.4536 kg/lb) then divide by 0.4047 ha/ac.
 
-trials_dt[,Yield_kgha := Yield*60*0.4536/0.4047]
-
-# trials_dt[,Crop := 'maize']
 trials_sf = st_as_sf(trials_dt, coords = c("Longitude", "Latitude"), 
                      crs = 4326, agr = "constant")
 
@@ -31,23 +38,18 @@ us_states4326.sf <- st_transform(us_states, 4326) %>% dplyr::select(state = NAME
 (plot1 <- tm_shape(us_states4326.sf) + tm_polygons()   +
   tm_shape(trials_sf) + tm_dots(size = 0.2))
 
-if(!file.exists('./trial_characterization_box/Data/output')){dir.create('./trial_characterization_box/Data/output', recursive = TRUE)}
-
+if(!file.exists('./trial_characterization_box/output')){dir.create('./trial_characterization_box/output', recursive = TRUE)}
 
 tmap_save(plot1, 
-          filename = "./trial_characterization_box/Data/output/map.pdf", height = 8, width = 6)  
-
+          filename = "./trial_characterization_box/output/map.pdf", height = 8, width = 6)  
 
 # Intersect with US map, in case there are some trials in other countries. We may not have SSURGO and DAYMET data in those
 trials_sf <- st_intersection(trials_sf, us_states4326.sf)
 
-
 # Add coordinates and id_trial (unique identifier for trial x year)
-trials_sf <- cbind(trials_sf, st_coordinates(trials_sf)) %>% 
-        mutate(id_trial = row_number())
+trials_sf <- cbind(trials_sf, st_coordinates(trials_sf)) %>% mutate(id_trial = row_number())
 
-# Find unique fields and called them location. A trial is an year x loc combination
-
+# Find unique fields and called them location.
 locs_sf <- st_difference(trials_sf) %>% mutate(id_loc = row_number()) %>% dplyr::select(id_loc, X,Y)
   
 
@@ -59,10 +61,9 @@ trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(Planting, forma
                                          month = tolower(format(planting_date,"%b")),
                                          year = format(planting_date,"%Y")) 
 
-if(!file.exists('./trial_characterization_box/Data/rds_files')){dir.create('./trial_characterization_box/Data/rds_files', recursive = TRUE)}
+if(!file.exists('./trial_characterization_box/rds_files')){dir.create('./trial_characterization_box/rds_files', recursive = TRUE)}
 
 
-
-saveRDS(trials_sf, './trial_characterization_box/Data/rds_files/trials_sf.rds')
-saveRDS(locs_sf, './trial_characterization_box/Data/rds_files/locs_sf.rds')
+saveRDS(trials_sf, './trial_characterization_box/rds_files/trials_sf.rds')
+saveRDS(locs_sf, './trial_characterization_box/rds_files/locs_sf.rds')
 
